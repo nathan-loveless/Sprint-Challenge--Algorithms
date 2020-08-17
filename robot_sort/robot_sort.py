@@ -97,7 +97,38 @@ class SortingRobot:
         Sort the robot's list.
         """
         # Fill this out
-        pass
+        # We need to pick up an item first, which is the first in the list
+        self.swap_item()
+
+        # We are going to keep moving right until we reach an item that is less than
+        # the item we are holding, item > the what we compare, we swap it and then
+        # continue moving right doing the same thing
+        # so in the first small list [5,4,3,2,1] it picks up 5 moves right and then drops 
+        # if at position 2 and picks up 4
+        # this is moving the smallest item to the back of the list.  
+        # it will take many resucrise calls to sort the list this way.
+        while self.can_move_right():
+            self.move_right()        
+            if self.compare_item() == 1:
+                self.swap_item()
+
+        # the previous while loop ran it all the way until it can't move right again
+        # we now need to move all the way back to the beginning of the list
+        while self.compare_item() != None:
+            self.move_left()
+        
+        # we pick up the beginning item again
+        self.swap_item()
+
+        # if we can move right we move right (we already picked up the first item in the array)
+        # and make a recursive call to continue sorting the list.
+        if self.can_move_right():
+            self.move_right()
+            self.sort()
+        else:
+            return
+
+        
 
 
 if __name__ == "__main__":
